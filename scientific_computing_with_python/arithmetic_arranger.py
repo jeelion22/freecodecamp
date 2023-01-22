@@ -1,5 +1,7 @@
 def arithmetic_arranger(list_a, sum_1=False):
-    if len(list_a) > 4:
+
+    if len(list_a) > 5:
+
         return "Error: Too many problems."
     else:
         list_1 = []
@@ -11,16 +13,21 @@ def arithmetic_arranger(list_a, sum_1=False):
             top_str = ""
             bottom_str = ""
             list_item = item.split(" ")
-            if list_item[1] not in "+-":
-                return "Error: Operator must be ", "+", " or ", "-", "."
-            if not list_item[0].isdigit() and list_item[2].isdigit():
+
+            if len(list_item) < 3:
                 return "Error: Numbers must only contain digits."
+
+            if list_item[1] != "+" and list_item[1] != "-":
+                return "Error: Operator must be '+' or '-'."
+            if list_item[0].isdigit() and list_item[2].isdigit():
+                pass
+            else:
+                return "Error: Numbers must only contain digits."
+
             if len(list_item[0]) > 4 or len(list_item[2]) > 4:
                 return "Error: Numbers cannot be more than four digits."
             if len(list_item[0]) > len(list_item[2]):
-                top_str += ("  " * (len(list_item[0]) - len(list_item[2]))) + list_item[
-                    0
-                ]
+                top_str += "  " + list_item[0]
                 bottom_str += (
                     list_item[1]
                     + (" " * (len(list_item[0]) - len(list_item[2]) + 1))
@@ -35,10 +42,12 @@ def arithmetic_arranger(list_a, sum_1=False):
                     total = int(list_item[0]) + int(list_item[2])
                     sums = (" " * (len(bottom_line) - len(str(total)))) + str(total)
                     sum_list.append(sums)
-                else:
+                elif list_item[1] == "-":
                     total = int(list_item[0]) - int(list_item[2])
                     sums = (" " * (len(bottom_line) - len(str(total)))) + str(total)
                     sum_list.append(sums)
+                else:
+                    return
 
             elif len(list_item[0]) < len(list_item[2]):
                 top_str += (
@@ -84,10 +93,14 @@ def arithmetic_arranger(list_a, sum_1=False):
         sum_line = space.join(sum_list)
 
     if sum_1 == True:
-        return "{}\n{}\n{}\n{}".format(first_line, second_line, bottom_line, sum_line)
+        arranged_problems = "{}\n{}\n{}\n{}".format(
+            first_line, second_line, bottom_line, sum_line
+        )
+        return arranged_problems
 
     else:
-        return "{}\n{}\n{}".format(first_line, second_line, bottom_line)
+        arranged_problems = "{}\n{}\n{}".format(first_line, second_line, bottom_line)
+        return arranged_problems
 
 
-print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
+print(arithmetic_arranger(["3 + 698", "3801 - 2", "45 + 43", "123 + 49"], True))
