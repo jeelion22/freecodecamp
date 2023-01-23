@@ -10,7 +10,9 @@ def add_time(start_time, duration, start_day_of_week=None):
     time_duration = datetime.timedelta(hours=hr, minutes=min)
     new_date = sta_time_obj + time_duration
     days_remaing = int(new_date.day) - 1
-    cur_time = new_date.strftime("%I:%M %p")
+
+    hour_format = int(new_date.strftime("%I"))
+    cur_time = str(hour_format) + str(new_date.strftime(":%M %p"))
 
     if start_day_of_week != None:
         days = [
