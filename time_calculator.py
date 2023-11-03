@@ -2,7 +2,6 @@ import datetime
 
 
 def add_time(start_time, duration, start_day_of_week=None):
-
     hr = int(duration.split(":")[0])
     min = int(duration.split(":")[1])
 
@@ -28,10 +27,14 @@ def add_time(start_time, duration, start_day_of_week=None):
         if start_day_of_week.title() in days:
             day = days_remaing % 7
             ind = days.index(start_day_of_week.title())
-            cur_day = days[day + ind]
+            day_index = day + ind
+            if day_index > 6:
+                cur_day = days[day_index % 7]
+            else:
+                cur_day = days[day + ind]
 
             if days_remaing == 1:
-                return "{} (next day)".format(cur_time)
+                return "{}, {} (next day)".format(cur_time, cur_day)
             elif days_remaing > 1:
                 return "{}, {} ({} days later)".format(cur_time, cur_day, days_remaing)
             else:
@@ -46,20 +49,4 @@ def add_time(start_time, duration, start_day_of_week=None):
             return "{}".format(cur_time)
 
 
-print(add_time("3:00 PM", "3:10"))
-# Returns: 6:10 PM
-
-print(add_time("11:30 AM", "2:32", "Monday"))
-# Returns: 2:02 PM, Monday
-
-print(add_time("11:43 AM", "00:20"))
-# Returns: 12:03 PM
-
-print(add_time("10:10 PM", "3:30"))
-# Returns: 1:40 AM (next day)
-
-print(add_time("11:43 PM", "24:20", "tueSday"))
-# Returns: 12:03 AM, Thursday (2 days later)
-
 print(add_time("6:30 PM", "205:12"))
-# Returns: 7:42 AM (9 days later)
